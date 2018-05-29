@@ -25,12 +25,19 @@ export class AtndMgtComponent implements OnInit {
   }
 
   getAtnds(method: string): void {
-    this.atndMgtService.getAtndsAllStudents(this.date.getFullYear(), this.date.getMonth() + 1, this.offset)
-    .subscribe(mgtInfo => {
+    this.atndMgtService.getAtndsAllStudents(this.date.getFullYear(), this.date.getMonth() + 1, this.offset).subscribe(mgtInfo => {
       this.days = mgtInfo.dates;
       this.users = mgtInfo.users;
       for ( const user of this.users ) {
         user.atnds = mgtInfo.atnds.filter(atnd => atnd.userId === user.id);
+      }
+      // tslint:disable-next-line:forin
+      for ( const userIdx in this.users ) { // 登校日なのにデータがない日付に空のAtndインスタンスを挿入する
+        for ( const atndIdx in this.users[userIdx].atnds ) {
+           if ( this.days[atndIdx] !== this.users[userIdx].atnds[atndIdx].date ) {
+             this.users[userIdx].atnds.splice(Number(atndIdx), 0, new Atnd());
+           }
+        }
       }
       switch (method) {
         case 'next':

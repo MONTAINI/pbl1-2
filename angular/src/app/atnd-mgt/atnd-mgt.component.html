@@ -1,26 +1,29 @@
 <div id="date">
-    <button mat-button (click)="previous()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+    <button mat-button color="primary" (click)="previous()"><mat-icon>keyboard_arrow_left</mat-icon></button>
       {{ date | date:'yyyy年MM月'}}
-    <button mat-button (click)="next()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+    <button mat-button color="primary" (click)="next()"><mat-icon>keyboard_arrow_right</mat-icon></button>
 </div>
 
+<div id=table>
 <table>
   <thead>
     <tr>
       <th>出席番号</th>
       <th>名前</th>
-      <th *ngFor="let day of days.slice(offset, offset + 5)">{{ day | date:'d' }}</th>
+      <th *ngFor="let day of days.slice(offset, offset + 5)">{{ day | date:'d日' }}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let user of users">
-      <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
-      <td>{{ user.userName }}</td>
+      <td class="student-id" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
+      <td class="student-name" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
       <td *ngFor="let atnd of user.atnds.slice(offset, offset + 5)">
         <button mat-button (click)="openDialog(atnd)">
-          登校時刻{{ atnd.cameAt }}<br>下校時刻{{ atnd.leavedAt }}
+          <div><span>登校時刻</span><span class="time">{{ atnd.cameAt }}</span></div>
+          <div><span>下校時刻</span><span class="time">{{ atnd.leavedAt }}</span></div>
         </button>
       </td>
     </tr>
   </tbody>
 </table>
+</div>

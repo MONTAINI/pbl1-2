@@ -1,14 +1,19 @@
+<div class="student-info">
+  <span class="student-info">{{ user.attendanceNumber }}番</span>
+  <span class="student-info">{{ user.userName }}</span>
+</div>
+
 <div id="subhead">
   <button mat-button (click)="lastMonth()"><mat-icon>keyboard_arrow_left</mat-icon></button>
       {{ date | date:'yyyy年MM月'}}
   <button mat-button (click)="nextMonth()"><mat-icon>keyboard_arrow_right</mat-icon></button>
-  <div>{{ user.attendanceNumber }}</div>
-  <div>{{ user.userName }}</div>
 </div>
 
+<div id=table>
 <table>
   <thead>
     <tr>
+      <th>日付</th>
       <th>登校時刻</th>
       <th>下校時刻</th>
       <th>1限目</th>
@@ -31,3 +36,4 @@
     </tr>
   </tbody>
 </table>
+</div>

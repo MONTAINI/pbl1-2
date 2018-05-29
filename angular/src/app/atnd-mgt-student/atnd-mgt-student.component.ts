@@ -10,10 +10,8 @@ import { AtndMgtService } from '../atnd-mgt.service';
   styleUrls: ['./atnd-mgt-student.component.scss']
 })
 export class AtndMgtStudentComponent implements OnInit {
-  // userId: number;
   date = new Date();
   user = new User();
-  // atnds: Atnd[];
   atndCodes = ['出席', '遅刻', '欠席', '就活', '病欠', '公欠'];
 
   constructor(private route: ActivatedRoute, private atndMgtService: AtndMgtService) { }

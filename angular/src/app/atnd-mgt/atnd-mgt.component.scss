@@ -1,8 +1,47 @@
-#date {
+div#date {
     font-size: 1.5rem;
     text-align: center;
 }
 
+div#talbe {
+    text-align: center;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 table, th, td{
-    border: 1px solid;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    //line-height: 1.5;
+}
+
+th {
+    color: white;
+    background: #673ab7;
+}
+
+th, td{
+    padding: 0.4rem;
+}
+
+td {
+    background-color: white;
+}
+
+button {
+    font-size: 1rem;
+}
+
+td.student-id, td.student-name {
+    text-align: center;
+}
+td.student-id:hover, td.student-name:hover {
+    background-color: lightgrey;
+}
+
+span.time {
+    padding-left: 1rem;
 }

@@ -1,3 +1,3 @@
 class Day < ApplicationRecord
-  has_many :attendances, foreign_key: :date, primary_key: :date, dependent: :destroy
+  has_many :attendances, dependent: :destroy
 end
