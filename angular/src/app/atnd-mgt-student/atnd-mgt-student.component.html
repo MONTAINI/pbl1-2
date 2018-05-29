@@ -1,0 +1,33 @@
+<div id="subhead">
+  <button mat-button (click)="lastMonth()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+      {{ date | date:'yyyy年MM月'}}
+  <button mat-button (click)="nextMonth()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+  <div>{{ user.attendanceNumber }}</div>
+  <div>{{ user.userName }}</div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>登校時刻</th>
+      <th>下校時刻</th>
+      <th>1限目</th>
+      <th>2限目</th>
+      <th>3限目</th>
+      <th>4限目</th>
+      <th>5限目</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let atnd of user.atnds">
+      <th>{{atnd.date | date:'d'}}</th>
+      <td>{{atnd.cameAt}}</td>
+      <td>{{atnd.leavedAt}}</td>
+      <td>{{atndCodes[atnd.atnd1]}}</td>
+      <td>{{atndCodes[atnd.atnd2]}}</td>
+      <td>{{atndCodes[atnd.atnd3]}}</td>
+      <td>{{atndCodes[atnd.atnd4]}}</td>
+      <td>{{atndCodes[atnd.atnd5]}}</td>
+    </tr>
+  </tbody>
+</table>

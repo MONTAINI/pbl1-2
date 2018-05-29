@@ -1,0 +1,20 @@
+<div class="loading-bar" [hidden]="!(loadingObservable | async)">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<mat-toolbar color="primary" class="toolbar mat-elevation-z6">
+    <span>{{title}}</span>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened="true" class="mat-elevation-z5">
+        <mat-nav-list>
+            <mat-list-item routerLink="/atnd-mgt" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">出席状況管理</mat-list-item>
+            <mat-list-item routerLink="/year-register" routerLinkActive="active">新年度登録</mat-list-item>
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+</mat-sidenav-container>
