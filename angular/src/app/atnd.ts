@@ -23,3 +23,8 @@ export class MgtInfo {
     users: User[];
     atnds: Atnd[];
 }
+
+export class Times {
+    cameAt: string;
+    leavedAt: string;
+}

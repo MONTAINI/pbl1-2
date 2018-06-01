@@ -7,23 +7,49 @@
 <div id=table>
 <table>
   <thead>
+    <tr *ngIf="5 == days.slice(offset, offset + 5).length; else elseDays">
+      <th>出席番号</th>
+      <th>名前</th>
+      <th *ngFor="let day of days.slice(offset, offset + 5)">{{ day | date:'d日 (EEE)' }}</th>
+    </tr>
+
+    <ng-template #elseDays>
     <tr>
       <th>出席番号</th>
       <th>名前</th>
-      <th *ngFor="let day of days.slice(offset, offset + 5)">{{ day | date:'d日' }}</th>
+      <th *ngFor="let day of days.slice(days.length - 5, days.length)">{{ day | date:'d日 (EEE)' }}</th>
     </tr>
+    </ng-template>
+
   </thead>
-  <tbody>
+
+  <tbody *ngIf="5 == days.slice(offset, offset + 5).length; else elseUsers">
     <tr *ngFor="let user of users">
       <td class="student-id" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
       <td class="student-name" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
-      <td *ngFor="let atnd of user.atnds.slice(offset, offset + 5)">
+      <td *ngFor="let atnd of user.atnds.slice(offset, offset + 5)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}">
         <button mat-button (click)="openDialog(atnd)">
-          <div><span>登校時刻</span><span class="time">{{ atnd.cameAt }}</span></div>
-          <div><span>下校時刻</span><span class="time">{{ atnd.leavedAt }}</span></div>
+          <div>{{ atnd.cameAt }}</div>
+          <div>{{ atnd.leavedAt }}</div>
         </button>
       </td>
     </tr>
   </tbody>
+
+  <ng-template #elseUsers>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td class="student-id" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
+      <td class="student-name" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
+      <td *ngFor="let atnd of user.atnds.slice(user.atnds.length - 5, user.atnds.length)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}">
+        <button mat-button (click)="openDialog(atnd)">
+          <div>{{ atnd.cameAt }}</div>
+          <div>{{ atnd.leavedAt }}</div>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  </ng-template>
+
 </table>
 </div>

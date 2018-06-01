@@ -16,7 +16,8 @@ import {
   MatTableModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSelectModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -53,7 +54,8 @@ import { DialogComponent } from './dialog/dialog.component';
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
   entryComponents: [DialogComponent],
   providers: [AtndMgtService],

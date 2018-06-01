@@ -12,7 +12,7 @@ import { AtndMgtService } from '../atnd-mgt.service';
 export class AtndMgtStudentComponent implements OnInit {
   date = new Date();
   user = new User();
-  atndCodes = ['出席', '遅刻', '欠席', '就活', '病欠', '公欠'];
+  atndCodes = ['出席', '遅刻', '欠席', '就活', '病欠', '公欠', '記録なし'];
 
   constructor(private route: ActivatedRoute, private atndMgtService: AtndMgtService) { }
 
@@ -42,4 +42,26 @@ export class AtndMgtStudentComponent implements OnInit {
     this.getAtnds();
   }
 
+  isAbsent(state: number): boolean {
+    if ( state === 1 || state === 2 || state === 4) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isUnknown(state: number): boolean {
+    if ( state === 6 ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  changeState(atndId: number, state: {[key: string]: number; }) {
+    this.atndMgtService.putAtnd(this.user.id, this.user.atnds[atndId].date, state).subscribe(times => {
+      this.user.atnds[atndId].cameAt = times.cameAt;
+      this.user.atnds[atndId].leavedAt = times.leavedAt;
+    });
+  }
 }

@@ -24,15 +24,45 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let atnd of user.atnds">
-      <th>{{atnd.date | date:'d'}}</th>
+    <tr *ngFor="let atnd of user.atnds; index as idx;">
+      <th>{{atnd.date | date:'d日 (EEE)'}}</th>
       <td>{{atnd.cameAt}}</td>
       <td>{{atnd.leavedAt}}</td>
-      <td>{{atndCodes[atnd.atnd1]}}</td>
-      <td>{{atndCodes[atnd.atnd2]}}</td>
-      <td>{{atndCodes[atnd.atnd3]}}</td>
-      <td>{{atndCodes[atnd.atnd4]}}</td>
-      <td>{{atndCodes[atnd.atnd5]}}</td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd1), 'unknown': isUnknown(atnd.atnd1)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd1" (change)="changeState(idx, {atnd1: atnd.atnd1})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd2), 'unknown': isUnknown(atnd.atnd2)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd2" (change)="changeState(idx, {atnd2: atnd.atnd2})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd3), 'unknown': isUnknown(atnd.atnd3)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd3" (change)="changeState(idx, {atnd3: atnd.atnd3})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd4), 'unknown': isUnknown(atnd.atnd4)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd4" (change)="changeState(idx, {atnd4: atnd.atnd4})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td [ngClass]="{ 'absent': isAbsent(atnd.atnd5), 'unknown': isUnknown(atnd.atnd5)}">
+        <mat-form-field>
+          <mat-select [(ngModel)]="atnd.atnd5" (change)="changeState(idx, {atnd5: atnd.atnd5})">
+              <mat-option *ngFor="let atndCode of atndCodes; index as idx;" [value]="idx">{{ atndCode }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -3,13 +3,13 @@ class CreateAttendances < ActiveRecord::Migration[5.2]
     create_table :attendances do |t|
       t.references :user, null:false, foreign_key: true
       t.date :date, null:false
-      t.integer :atnd1, null:false
-      t.integer :atnd2, null:false
-      t.integer :atnd3, null:false
-      t.integer :atnd4, null:false
-      t.integer :atnd5, null:false
-      t.time :came_at, null:false
-      t.time :leaved_at, null:false
+      t.integer :atnd1
+      t.integer :atnd2
+      t.integer :atnd3
+      t.integer :atnd4
+      t.integer :atnd5
+      t.time :came_at
+      t.time :leaved_at
 
       t.timestamps
     end

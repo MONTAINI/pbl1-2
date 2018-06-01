@@ -5,10 +5,13 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { User, MgtInfo } from './atnd';
+import { Times, User, MgtInfo } from './atnd';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': 'my-auth-token'
+  })
 };
 
 @Injectable()
@@ -17,7 +20,7 @@ export class AtndMgtService {
   constructor(private http: HttpClient) { }
 
   // 一日分の全生徒のデータ
-  getAtndsAllStudents(year: number, month: number, offset: number): Observable<MgtInfo> {
+  getAtndsAllStudents(year: number, month: number): Observable<MgtInfo> {
     return this.http.get<MgtInfo>(`//localhost:3000/month/${year}/${month}`)
       .pipe(tap(mgtInfo => console.log(mgtInfo)), catchError(this.handleError('getAtndsAllStudents', new MgtInfo()))
       );
@@ -30,14 +33,12 @@ export class AtndMgtService {
       );
   }
 
-  // 名前取得
-  /*
-  getName(num: number): Observable<string> {
-    return this.http.get<string>(`//localhost:3000/student/${num}`)
-      .pipe(tap(name => console.log(name)), catchError(this.handleError('getName', ''))
+  // 出席状況の更新
+  putAtnd(userId: number, date: string, state: {[key: string]: number}): Observable<Times> {
+    return this.http.put<Times>(`//localhost:3000/attendances/${userId}/${date}`, JSON.stringify(state), httpOptions)
+      .pipe(tap(res => console.log(res)), catchError(this.handleError('putAtnd', new Times()))
     );
   }
-  */
    /**
    * 失敗したHttp操作を処理します。
    * アプリを持続させます。

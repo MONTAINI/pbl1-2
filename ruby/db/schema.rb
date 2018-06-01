@@ -15,13 +15,13 @@ ActiveRecord::Schema.define(version: 2018_05_27_123456) do
   create_table "attendances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "date", null: false
-    t.integer "atnd1", null: false
-    t.integer "atnd2", null: false
-    t.integer "atnd3", null: false
-    t.integer "atnd4", null: false
-    t.integer "atnd5", null: false
-    t.time "came_at", null: false
-    t.time "leaved_at", null: false
+    t.integer "atnd1"
+    t.integer "atnd2"
+    t.integer "atnd3"
+    t.integer "atnd4"
+    t.integer "atnd5"
+    t.time "came_at"
+    t.time "leaved_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_attendances_on_user_id"
