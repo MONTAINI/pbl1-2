@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import { Atnd, User, MgtInfo } from '../atnd';
@@ -20,7 +20,11 @@ export class AtndMgtComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private atndMgtService: AtndMgtService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    const state = location.hash.slice(1).split('_');
+    this.date.setFullYear(Number(state[0]));
+    this.date.setMonth(Number(state[1]));
+    this.offset = Number(state[2]);
     this.getAtnds('init');
   }
 
@@ -31,18 +35,9 @@ export class AtndMgtComponent implements OnInit {
       for ( const user of this.users ) { // userの中に出席状況を入れる
         user.atnds = mgtInfo.atnds.filter(atnd => atnd.userId === user.id);
       }
+      // 記録がないならダミーデータを埋め込む
       const dummyAtnd = new Atnd();
       [dummyAtnd.atnd1, dummyAtnd.atnd2, dummyAtnd.atnd3, dummyAtnd.atnd4, dummyAtnd.atnd5] = [6, 6, 6, 6, 6];
-      // tslint:disable-next-line:forin
-      // for ( const userIdx in this.users ) { // 登校日なのにデータがない日付に空のAtndインスタンスを挿入する
-      //   for ( const atndIdx in this.users[userIdx].atnds ) {
-      //      if ( this.days[atndIdx] !== this.users[userIdx].atnds[atndIdx].date ) {
-      //        dummyAtnd.userId = this.users[userIdx].id;
-      //        dummyAtnd.date = this.days[atndIdx];
-      //        this.users[userIdx].atnds.splice(Number(atndIdx), 0, dummyAtnd);
-      //      }
-      //   }
-      // }
       this.users.forEach((user, usersIdx, users) => {
         for ( const atndIdx in user.atnds ) {
           if ( this.days[atndIdx] !== user.atnds[atndIdx].date ) {
@@ -52,6 +47,7 @@ export class AtndMgtComponent implements OnInit {
           }
         }
       });
+      // 月が変わるならoffsetを初期値にする
       switch (method) {
         case 'next':
           this.offset = 0;
@@ -72,7 +68,7 @@ export class AtndMgtComponent implements OnInit {
     } else {
       this.offset -= 5;
     }
-
+    location.hash = '#' + this.date.getFullYear() + '_' + this.date.getMonth() + '_' + this.offset;
   }
 
   // 次のデータ
@@ -84,8 +80,10 @@ export class AtndMgtComponent implements OnInit {
     } else {
       this.offset += 5;
     }
+    location.hash = '#' + this.date.getFullYear() + '_' + this.date.getMonth() + '_' + this.offset;
   }
 
+  // 欠席・遅刻判定
   isAbsent(atnd: Atnd): boolean {
     const atndArray = [];
     [atndArray[0], atndArray[1], atndArray[2], atndArray[3], atndArray[4]] =
@@ -94,6 +92,7 @@ export class AtndMgtComponent implements OnInit {
     return atndArray.some(state => state === 1 || state === 2 || state === 4);
   }
 
+  // 不明判定
   isUnknown(atnd: Atnd): boolean {
     const atndArray = [];
     [atndArray[0], atndArray[1], atndArray[2], atndArray[3], atndArray[4]] =
