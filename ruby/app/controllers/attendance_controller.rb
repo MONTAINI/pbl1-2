@@ -1,6 +1,6 @@
 class AttendanceController < ApplicationController
   # 全員の一ヶ月分
-  def atndsAllStudents
+  def atnds_all_students
     usersSc = User.select('id, attendance_number, user_name').where(fiscal_year: 2018)
     usersSc = usersSc.map{ |u| u.attributes }
     usersCc = Array.new()
@@ -30,7 +30,7 @@ class AttendanceController < ApplicationController
   end
 
   # 生徒一人の一ヶ月分
-  def atndsOneStudent
+  def atnds_one_student
     user = User.select('id, attendance_number, user_name').find_by(fiscal_year: 2018, id: params[:student]).attributes
 
     dates = Day.select('date').where(school_day: true, date: (params[:year] + '-' + params[:month] + '-01').to_date.all_month).pluck(:date)
@@ -61,7 +61,7 @@ class AttendanceController < ApplicationController
   end
 
   # 出席状況の更新
-  def updateAttendance
+  def update_attendance
     state = JSON.parse(request.body.read).to_a
     atnd = Attendance.find_by(user_id: params[:student], date: params[:date])
     if atnd == nil
