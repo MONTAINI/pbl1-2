@@ -1,12 +1,12 @@
 <div id="date">
-    <button mat-button color="primary" (click)="previous()"><mat-icon>keyboard_arrow_left</mat-icon></button>
-      {{ date | date:'yyyy年MM月'}}
-    <button mat-button color="primary" (click)="next()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+  <button mat-button color="primary" (click)="previous()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+  {{ date | date:'yyyy年MM月'}}
+  <button mat-button color="primary" (click)="next()"><mat-icon>keyboard_arrow_right</mat-icon></button>
 </div>
 
 <div id=table>
-<table>
-  <thead>
+  <table>
+    <thead>
     <tr *ngIf="5 == days.slice(offset, offset + 5).length; else elseDays">
       <th>出席番号</th>
       <th>名前</th>
@@ -14,42 +14,38 @@
     </tr>
 
     <ng-template #elseDays>
-    <tr>
-      <th>出席番号</th>
-      <th>名前</th>
-      <th *ngFor="let day of days.slice(days.length - 5, days.length)">{{ day | date:'d日 (EEE)' }}</th>
-    </tr>
+      <tr>
+        <th>出席番号</th>
+        <th>名前</th>
+        <th *ngFor="let day of days.slice(days.length - 5, days.length)">{{ day | date:'d日 (EEE)' }}</th>
+      </tr>
     </ng-template>
 
-  </thead>
+    </thead>
 
-  <tbody *ngIf="5 == days.slice(offset, offset + 5).length; else elseUsers">
+    <tbody *ngIf="5 == days.slice(offset, offset + 5).length; else elseUsers">
     <tr *ngFor="let user of users">
-      <td class="student-id" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
-      <td class="student-name" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
-      <td *ngFor="let atnd of user.atnds.slice(offset, offset + 5)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}">
-        <button mat-button (click)="openDialog(atnd)">
-          <div>{{ atnd.cameAt }}</div>
-          <div>{{ atnd.leavedAt }}</div>
-        </button>
+      <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
+      <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
+      <td *ngFor="let atnd of user.atnds.slice(offset, offset + 5)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}" (click)="openDialog(atnd)">
+        <div>{{ atnd.cameAt }}</div>
+        <div>{{ atnd.leavedAt }}</div>
       </td>
     </tr>
-  </tbody>
+    </tbody>
 
-  <ng-template #elseUsers>
-  <tbody>
-    <tr *ngFor="let user of users">
-      <td class="student-id" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
-      <td class="student-name" routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
-      <td *ngFor="let atnd of user.atnds.slice(user.atnds.length - 5, user.atnds.length)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}">
-        <button mat-button (click)="openDialog(atnd)">
+    <ng-template #elseUsers>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
+        <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
+        <td *ngFor="let atnd of user.atnds.slice(user.atnds.length - 5, user.atnds.length)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}" (click)="openDialog(atnd)">
           <div>{{ atnd.cameAt }}</div>
           <div>{{ atnd.leavedAt }}</div>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-  </ng-template>
+        </td>
+      </tr>
+      </tbody>
+    </ng-template>
 
-</table>
+  </table>
 </div>

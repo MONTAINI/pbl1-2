@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 import { Times, User, MgtInfo } from './atnd';
 
@@ -38,6 +38,13 @@ export class AtndMgtService {
     return this.http.put<Times>(`//localhost:3000/attendances/${userId}/${date}`, JSON.stringify(state), httpOptions)
       .pipe(tap(res => console.log(res)), catchError(this.handleError('putAtnd', new Times()))
     );
+  }
+
+  // 登校日の登録
+  postSchoolDays(schoolDays: {[key: string]: string}) {
+    return this.http.post('//localhost:3000/school-days', JSON.stringify(schoolDays), httpOptions)
+      .pipe(tap(res => console.log(res)), catchError(this.handleError('postSchoolDays'))
+      );
   }
    /**
    * 失敗したHttp操作を処理します。

@@ -17,24 +17,25 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatDialogModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDividerModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AtndMgtComponent } from './atnd-mgt/atnd-mgt.component';
-import { YearRegisterComponent } from './year-register/year-register.component';
 import { AtndMgtService } from './atnd-mgt.service';
 import { AtndMgtStudentComponent } from './atnd-mgt-student/atnd-mgt-student.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { SchoolDaysRegisterComponent } from './school-days-register/school-days-register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AtndMgtComponent,
-    YearRegisterComponent,
     AtndMgtStudentComponent,
-    DialogComponent
+    DialogComponent,
+    SchoolDaysRegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +56,8 @@ import { DialogComponent } from './dialog/dialog.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDividerModule
   ],
   entryComponents: [DialogComponent],
   providers: [AtndMgtService],

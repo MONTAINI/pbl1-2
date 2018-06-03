@@ -1,4 +1,4 @@
-class AttendanceController < ApplicationController
+class AttendancesController < ApplicationController
   # 全員の一ヶ月分
   def atnds_all_students
     usersSc = User.select('id, attendance_number, user_name').where(fiscal_year: 2018)

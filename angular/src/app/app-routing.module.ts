@@ -3,12 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AtndMgtComponent } from './atnd-mgt/atnd-mgt.component';
 import { AtndMgtStudentComponent } from './atnd-mgt-student/atnd-mgt-student.component';
-import { YearRegisterComponent } from './year-register/year-register.component';
+import { SchoolDaysRegisterComponent } from './school-days-register/school-days-register.component';
 
 const routes: Routes = [
   { path: 'atnd-mgt', component: AtndMgtComponent },
   { path: 'atnd-mgt-student/month/:year/:month/student/:student', component: AtndMgtStudentComponent },
-  { path: 'year-register', component: YearRegisterComponent }
+  { path: 'school-days-register', component: SchoolDaysRegisterComponent }
 ];
 
 @NgModule({

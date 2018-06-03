@@ -13,7 +13,6 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class AtndMgtComponent implements OnInit {
   date = new Date();
   users:  User[];
-  atnds:  Atnd[];
   // days: string[]; にするとテンプレート内でdaysがnullになる
   days = [''];
   offset = 0;
@@ -21,10 +20,12 @@ export class AtndMgtComponent implements OnInit {
   constructor(private dialog: MatDialog, private atndMgtService: AtndMgtService) { }
 
   ngOnInit(): void {
-    const state = location.hash.slice(1).split('_');
-    this.date.setFullYear(Number(state[0]));
-    this.date.setMonth(Number(state[1]));
-    this.offset = Number(state[2]);
+    if ( location.hash ) {
+      const state = location.hash.slice(1).split('_');
+      this.date.setFullYear(Number(state[0]));
+      this.date.setMonth(Number(state[1]));
+      this.offset = Number(state[2]);
+    }
     this.getAtnds('init');
   }
 
@@ -38,14 +39,14 @@ export class AtndMgtComponent implements OnInit {
       // 記録がないならダミーデータを埋め込む
       const dummyAtnd = new Atnd();
       [dummyAtnd.atnd1, dummyAtnd.atnd2, dummyAtnd.atnd3, dummyAtnd.atnd4, dummyAtnd.atnd5] = [6, 6, 6, 6, 6];
-      this.users.forEach((user, usersIdx, users) => {
-        for ( const atndIdx in user.atnds ) {
-          if ( this.days[atndIdx] !== user.atnds[atndIdx].date ) {
-             dummyAtnd.userId = user.id;
-             dummyAtnd.date = this.days[atndIdx];
-             user.atnds.splice(Number(atndIdx), 0, dummyAtnd);
+      this.users.forEach((user) => {
+        this.days.forEach((day, idx)  => {
+          if (user.atnds[idx] === undefined || day !== user.atnds[idx].date ) {
+            dummyAtnd.userId = user.id;
+            dummyAtnd.date = day;
+            user.atnds.splice(Number(idx), 0, dummyAtnd);
           }
-        }
+        });
       });
       // 月が変わるならoffsetを初期値にする
       switch (method) {
@@ -56,6 +57,7 @@ export class AtndMgtComponent implements OnInit {
           this.offset = Math.floor((this.days.length - 1) / 5) * 5;
           break;
       }
+      location.hash = '#' + this.date.getFullYear() + '_' + this.date.getMonth() + '_' + this.offset;
     });
   }
 
@@ -67,20 +69,20 @@ export class AtndMgtComponent implements OnInit {
       this.getAtnds('previous');
     } else {
       this.offset -= 5;
+      location.hash = '#' + this.date.getFullYear() + '_' + this.date.getMonth() + '_' + this.offset;
     }
-    location.hash = '#' + this.date.getFullYear() + '_' + this.date.getMonth() + '_' + this.offset;
   }
 
   // 次のデータ
   next(): void {
-    if ( this.offset + 5 > this.days.length ) { //  来月
+    if ( this.offset + 5 >= this.days.length ) { //  来月
       this.date.setMonth(this.date.getMonth() + 1);
       this.date = new Date(this.date.getTime());
       this.getAtnds('next');
     } else {
       this.offset += 5;
+      location.hash = '#' + this.date.getFullYear() + '_' + this.date.getMonth() + '_' + this.offset;
     }
-    location.hash = '#' + this.date.getFullYear() + '_' + this.date.getMonth() + '_' + this.offset;
   }
 
   // 欠席・遅刻判定
