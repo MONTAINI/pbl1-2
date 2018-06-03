@@ -11,17 +11,17 @@ class AttendancesController < ApplicationController
 
     dates = Day.select('date').where(school_day: true, date: (params[:year] + '-' + params[:month] + '-01').to_date.all_month).pluck(:date)
 
-    atndsSc = Attendance.select('id, user_id, date, atnd1, atnd2, atnd3, atnd4, atnd5, came_at, leaved_at')
+    atndsSc = Attendance.select('id, user_id, date, atnd1, atnd2, atnd3, atnd4, atnd5, come_at, left_at')
                 .where(date: (dates[0])..(dates[dates.length - 1])).order('date ASC')
     atndsSc = atndsSc.map{ |u| u.attributes }
     atndsCc = Array.new()
     for atnd in atndsSc
       atnd = atnd.map{ |k, v| [k.camelize(:lower), v] }.to_h
-      unless atnd['cameAt'].blank?
-        atnd['cameAt'] = atnd['cameAt'].to_time.strftime("%X")
+      unless atnd['comeAt'].blank?
+        atnd['comeAt'] = atnd['comeAt'].to_time.strftime("%X")
       end
-      unless atnd['leavedAt'].blank?
-        atnd['leavedAt'] = atnd['leavedAt'].to_time.strftime("%X")
+      unless atnd['leftAt'].blank?
+        atnd['leftAt'] = atnd['leftAt'].to_time.strftime("%X")
       end
       atndsCc.push(atnd)
     end
@@ -35,7 +35,7 @@ class AttendancesController < ApplicationController
 
     dates = Day.select('date').where(school_day: true, date: (params[:year] + '-' + params[:month] + '-01').to_date.all_month).pluck(:date)
 
-    atndsSc = Attendance.select('date, atnd1, atnd2, atnd3, atnd4, atnd5, came_at, leaved_at')
+    atndsSc = Attendance.select('date, atnd1, atnd2, atnd3, atnd4, atnd5, come_at, left_at')
                 .where(user_id: params[:student], date: (dates[0])..(dates[dates.length - 1])).order('date asc')
     atndsSc = atndsSc.map{ |u| u.attributes }
     atndsCc = Array.new()
@@ -47,11 +47,11 @@ class AttendancesController < ApplicationController
         atnd['date'] = dates[idx]
         atnd['atnd1'], atnd['atnd2'], atnd['atnd3'], atnd['atnd4'], atnd['atnd5'] = 6, 6, 6, 6, 6;
       elsif
-        unless atnd['cameAt'].blank?
-          atnd['cameAt'] = atnd['cameAt'].to_time.strftime("%X")
+        unless atnd['comeAt'].blank?
+          atnd['comeAt'] = atnd['comeAt'].to_time.strftime("%X")
         end
-        unless atnd['leavedAt'].blank?
-          atnd['leavedAt'] = atnd['leavedAt'].to_time.strftime("%X")
+        unless atnd['leftAt'].blank?
+          atnd['leftAt'] = atnd['leftAt'].to_time.strftime("%X")
         end
       end
       atndsCc.push(atnd)
@@ -80,10 +80,10 @@ class AttendancesController < ApplicationController
     states.each_with_index do |state, idx|
       case state
       when 0
-        atnd['came_at'] = startAts[idx].strftime("%X")
+        atnd['come_at'] = startAts[idx].strftime("%X")
         break
       when 1
-        atnd['came_at'] = (startAts[idx] + (60*15)).strftime("%X")
+        atnd['come_at'] = (startAts[idx] + (60*15)).strftime("%X")
         break
       end
     end
@@ -91,12 +91,12 @@ class AttendancesController < ApplicationController
     # 下校時刻の更新
     states.each_with_index.reverse_each do |state, idx|
       if state == 0 || state == 1
-        atnd['leaved_at'] = (startAts[idx] + (60*50)).strftime("%X")
+        atnd['left_at'] = (startAts[idx] + (60*50)).strftime("%X")
         break
       end
     end
 
-    atnd.update(came_at: atnd['came_at'], leaved_at: atnd['leaved_at'])
-    render json: {cameAt: atnd['came_at'].strftime("%X"), leavedAt: atnd['leaved_at'].strftime("%X")}
+    atnd.update(come_at: atnd['come_at'], left_at: atnd['left_at'])
+    render json: {comeAt: atnd['come_at'].strftime("%X"), leftAt: atnd['left_at'].strftime("%X")}
   end
 end

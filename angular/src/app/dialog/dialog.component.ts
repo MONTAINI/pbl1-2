@@ -17,8 +17,8 @@ export class DialogComponent {
 
   changeState(state: {[key: string]: number; }) {
     this.atndMgtService.putAtnd(this.data.atnd.userId, this.data.atnd.date, state).subscribe(times => {
-      this.data.atnd.cameAt = times.cameAt;
-      this.data.atnd.leavedAt = times.leavedAt;
+      this.data.atnd.comeAt = times.comeAt;
+      this.data.atnd.leftAt = times.leftAt;
     });
     /*
     const startAts = [new Date('2000/01/01 09:20:00'),

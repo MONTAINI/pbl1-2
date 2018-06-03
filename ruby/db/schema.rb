@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 2018_05_27_123456) do
     t.integer "atnd3"
     t.integer "atnd4"
     t.integer "atnd5"
-    t.time "came_at"
-    t.time "leaved_at"
+    t.time "come_at"
+    t.time "left_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_attendances_on_user_id"

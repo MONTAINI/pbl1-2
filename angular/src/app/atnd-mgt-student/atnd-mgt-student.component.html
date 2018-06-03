@@ -26,8 +26,8 @@
   <tbody>
     <tr *ngFor="let atnd of user.atnds; index as idx;">
       <th>{{atnd.date | date:'d日 (EEE)'}}</th>
-      <td>{{atnd.cameAt}}</td>
-      <td>{{atnd.leavedAt}}</td>
+      <td>{{atnd.comeAt}}</td>
+      <td>{{atnd.leftAt}}</td>
       <td [ngClass]="{ 'absent': isAbsent(atnd.atnd1), 'unknown': isUnknown(atnd.atnd1)}">
         <mat-form-field>
           <mat-select [(ngModel)]="atnd.atnd1" (change)="changeState(idx, {atnd1: atnd.atnd1})">

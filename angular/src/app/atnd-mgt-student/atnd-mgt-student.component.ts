@@ -60,8 +60,8 @@ export class AtndMgtStudentComponent implements OnInit {
 
   changeState(atndId: number, state: {[key: string]: number; }) {
     this.atndMgtService.putAtnd(this.user.id, this.user.atnds[atndId].date, state).subscribe(times => {
-      this.user.atnds[atndId].cameAt = times.cameAt;
-      this.user.atnds[atndId].leavedAt = times.leavedAt;
+      this.user.atnds[atndId].comeAt = times.comeAt;
+      this.user.atnds[atndId].leftAt = times.leftAt;
     });
   }
 }

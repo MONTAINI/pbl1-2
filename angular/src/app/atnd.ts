@@ -14,8 +14,8 @@ export class Atnd {
   atnd3: number;
   atnd4: number;
   atnd5: number;
-  cameAt: string;
-  leavedAt: string;
+  comeAt: string;
+  leftAt: string;
 }
 
 export class MgtInfo {
@@ -25,6 +25,6 @@ export class MgtInfo {
 }
 
 export class Times {
-  cameAt: string;
-  leavedAt: string;
+  comeAt: string;
+  leftAt: string;
 }

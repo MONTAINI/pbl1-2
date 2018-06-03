@@ -8,8 +8,8 @@ class CreateAttendances < ActiveRecord::Migration[5.2]
       t.integer :atnd3
       t.integer :atnd4
       t.integer :atnd5
-      t.time :came_at
-      t.time :leaved_at
+      t.time :come_at
+      t.time :left_at
 
       t.timestamps
     end

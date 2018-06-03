@@ -28,8 +28,8 @@
       <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
       <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
       <td *ngFor="let atnd of user.atnds.slice(offset, offset + 5)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}" (click)="openDialog(atnd)">
-        <div>{{ atnd.cameAt }}</div>
-        <div>{{ atnd.leavedAt }}</div>
+        <div>{{ atnd.comeAt }}</div>
+        <div>{{ atnd.leftAt }}</div>
       </td>
     </tr>
     </tbody>
@@ -40,8 +40,8 @@
         <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.attendanceNumber }}</td>
         <td routerLink="/atnd-mgt-student/month/{{date.getFullYear()}}/{{date.getMonth()}}/student/{{user.id}}">{{ user.userName }}</td>
         <td *ngFor="let atnd of user.atnds.slice(user.atnds.length - 5, user.atnds.length)" [ngClass]="{ 'absent': isAbsent(atnd), 'unknown': isUnknown(atnd)}" (click)="openDialog(atnd)">
-          <div>{{ atnd.cameAt }}</div>
-          <div>{{ atnd.leavedAt }}</div>
+          <div>{{ atnd.comeAt }}</div>
+          <div>{{ atnd.leftAt }}</div>
         </td>
       </tr>
       </tbody>
