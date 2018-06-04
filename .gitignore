@@ -1,5 +1,7 @@
 /angular/node_modules/
+/angular/src/app/.idea/
 /ruby/vendor/
 /ruby/tmp/
 /ruby/.env
+/ruby/log/
 
