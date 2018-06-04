@@ -1,6 +1,6 @@
 <div id="school-days-register">
   <mat-form-field>
-    <mat-select [(ngModel)]="selectedFiscalYear" (change)="changeSelectedFiscalYear()" placeholder="年度">
+    <mat-select [(ngModel)]="selectedFiscalYear" (change)="changeSelectedFiscalYear()" required pattern="[0-9]+" placeholder="年度">
       <mat-option *ngFor="let fiscalYear of fiscalYears" [value]="fiscalYear">
         {{ fiscalYear }}
       </mat-option>
@@ -11,12 +11,12 @@
 
   <div>
     <mat-form-field>
-      <input matInput [(ngModel)]="periodSchoolDay[0]" [min]="minDate" [max]="maxDate" [matDatepicker]="firstTermStartDate" placeholder="前期の始業日">
+      <input matInput [(ngModel)]="periodSchoolDay[0]" [min]="minDate" [max]="maxDate" [matDatepicker]="firstTermStartDate" required maxlength="1" placeholder="前期の始業日">
       <mat-datepicker-toggle matSuffix [for]="firstTermStartDate"></mat-datepicker-toggle>
       <mat-datepicker #firstTermStartDate></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="periodSchoolDay[1]" [min]="minDate" [max]="maxDate" [matDatepicker]="firstTermLastDate" placeholder="前期の終業日">
+      <input matInput [(ngModel)]="periodSchoolDay[1]" [min]="minDate" [max]="maxDate" [matDatepicker]="firstTermLastDate" required maxlength="1" placeholder="前期の終業日">
       <mat-datepicker-toggle matSuffix [for]="firstTermLastDate"></mat-datepicker-toggle>
       <mat-datepicker #firstTermLastDate></mat-datepicker>
     </mat-form-field>
@@ -24,12 +24,12 @@
 
   <div>
     <mat-form-field>
-      <input matInput [(ngModel)]="periodSchoolDay[2]" [min]="minDate" [max]="maxDate" [matDatepicker]="latterTermStartDate" placeholder="後期の始業日">
+      <input matInput [(ngModel)]="periodSchoolDay[2]" [min]="minDate" [max]="maxDate" [matDatepicker]="latterTermStartDate" required maxlength="1" placeholder="後期の始業日">
       <mat-datepicker-toggle matSuffix [for]="latterTermStartDate"></mat-datepicker-toggle>
       <mat-datepicker #latterTermStartDate></mat-datepicker>
     </mat-form-field>
     <mat-form-field>
-      <input matInput [(ngModel)]="periodSchoolDay[3]" [min]="minDate" [max]="maxDate" [matDatepicker]="latterTermLastDate" placeholder="後期の終業日">
+      <input matInput [(ngModel)]="periodSchoolDay[3]" [min]="minDate" [max]="maxDate" [matDatepicker]="latterTermLastDate" required maxlength="1" placeholder="後期の終業日">
       <mat-datepicker-toggle matSuffix [for]="latterTermLastDate"></mat-datepicker-toggle>
       <mat-datepicker #latterTermLastDate></mat-datepicker>
     </mat-form-field>
@@ -37,5 +37,5 @@
 
   <mat-divider></mat-divider>
 
-  <button mat-button (click)="send()"><mat-icon>done</mat-icon></button>
+  <button mat-button [disabled]="isSendable()" (click)="send()"><mat-icon>done</mat-icon></button>
 </div>

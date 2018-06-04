@@ -30,15 +30,32 @@ export class SchoolDaysRegisterComponent implements OnInit {
   }
 
   send(): void {
-    this.atndMgtService.postSchoolDays(
-        {"fiscalYear": this.selectedFiscalYear.toString(),
-        "firstTermStartDate": this.formatDate(this.periodSchoolDay[0]),
-        "firstTermLastDate": this.formatDate(this.periodSchoolDay[1]),
-        "latterTermStartDate": this.formatDate(this.periodSchoolDay[2]),
-        "latterTermLastDate": this.formatDate(this.periodSchoolDay[3])}
-    ).subscribe();
+     this.atndMgtService.postSchoolDays(
+         {"fiscalYear": this.selectedFiscalYear.toString(),
+         "firstTermStartDate": this.formatDate(this.periodSchoolDay[0]),
+         "firstTermLastDate": this.formatDate(this.periodSchoolDay[1]),
+         "latterTermStartDate": this.formatDate(this.periodSchoolDay[2]),
+         "latterTermLastDate": this.formatDate(this.periodSchoolDay[3])}
+     ).subscribe();
   }
 
+  // 全項目に値が入っていて、日付の整合性が取れている
+  isSendable(): boolean {
+    if ( this.selectedFiscalYear !== undefined
+      && this.periodSchoolDay[0] !== undefined
+      && this.periodSchoolDay[1] !== undefined
+      && this.periodSchoolDay[2] !== undefined
+      && this.periodSchoolDay[3] !== undefined
+      && this.periodSchoolDay[0] < this.periodSchoolDay[1]
+      && this.periodSchoolDay[1] < this.periodSchoolDay[2]
+      && this.periodSchoolDay[2] < this.periodSchoolDay[3] ) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+  // YYYY/MM/DD
   formatDate(date: Date): string {
     return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate()
   }
